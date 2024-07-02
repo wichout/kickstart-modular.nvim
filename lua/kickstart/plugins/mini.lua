@@ -2,6 +2,10 @@ return {
   { -- Collection of various small independent plugins/modules
     'echasnovski/mini.nvim',
     config = function()
+      -- Simple notification plugin
+      require('mini.notify').setup { lsp_progress = {
+        enable = false,
+      } }
       -- Better Around/Inside textobjects
       --
       -- Examples:
@@ -31,8 +35,6 @@ return {
       statusline.section_location = function()
         return '%2l:%-2v'
       end
-
-      -- ... and there is more!
       --  Check out: https://github.com/echasnovski/mini.nvim
     end,
   },

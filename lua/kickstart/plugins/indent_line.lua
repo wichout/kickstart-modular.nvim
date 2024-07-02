@@ -3,7 +3,32 @@ return {
     'lukas-reineke/indent-blankline.nvim',
     -- Enable `lukas-reineke/indent-blankline.nvim`
     -- See `:help ibl`
-    main = 'ibl',
-    opts = {},
+    config = function()
+      require('ibl').setup {
+        indent = {
+          char = '▏',
+          tab_char = '▏',
+          smart_indent_cap = true,
+          priority = 2,
+          repeat_linebreak = false,
+        },
+        scope = {
+          show_start = false,
+          show_end = false,
+        },
+        exclude = {
+          filetypes = {
+            'dashboard',
+            'help',
+            'neo-tree',
+            'Trouble',
+            'trouble',
+            'lazy',
+            'mason',
+            'notify',
+          },
+        },
+      }
+    end,
   },
 }
