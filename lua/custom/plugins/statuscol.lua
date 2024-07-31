@@ -8,14 +8,14 @@ return {
       ft_ignore = { 'neo-tree' },
       segments = {
         {
-          sign = { namespace = { 'gitsigns*' }, colwidth = 1 },
-          click = 'v:lua.ScSa',
-        },
-        {
           sign = { namespace = { 'diagnostic*' }, maxwidth = 1 },
           click = 'v:lua.ScSa',
         },
         { text = { builtin.lnumfunc, ' ' }, click = 'v:lua.ScLa' },
+        {
+          sign = { namespace = { 'gitsigns*' }, colwidth = 1 },
+          click = 'v:lua.ScSa',
+        },
       },
     }
   end,
