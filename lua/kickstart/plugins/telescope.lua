@@ -27,7 +27,16 @@ return {
       },
       { 'nvim-telescope/telescope-ui-select.nvim' },
       { 'nvim-tree/nvim-web-devicons', enabled = vim.g.have_nerd_font },
-      { 'kdheepak/lazygit.nvim' },
+      {
+        'kdheepak/lazygit.nvim',
+        cmd = {
+          'LazyGit',
+          'LazyGitConfig',
+          'LazyGitCurrentFile',
+          'LazyGitFilter',
+          'LazyGitFilterCurrentFile',
+        },
+      },
       { 'AckslD/nvim-neoclip.lua', opts = {} },
       { 'nvim-telescope/telescope-file-browser.nvim' },
     },
@@ -54,7 +63,6 @@ return {
       -- [[ Configure Telescope ]]
       -- See `:help telescope` and `:help telescope.setup()`
       --
-      local actions = require 'telescope.actions'
       require('telescope').setup {
         -- You can put your default mappings / updates / etc. in here
         --  All the info you're looking for is in `:help telescope.setup()`
@@ -69,13 +77,16 @@ return {
           ['ui-select'] = {
             require('telescope.themes').get_dropdown(),
           },
+          ['file_browser'] = {
+            hidden = { file_browser = true, folder_browser = true },
+            git_status = false,
+            hijack_netrw = true,
+          },
         },
         defaults = {
           mappings = {
             i = {
               ['<Esc>'] = 'close',
-              ['<A-v>'] = actions.file_vsplit,
-              ['<A-x>'] = actions.file_split,
             },
           },
           theme = 'center',
@@ -83,9 +94,10 @@ return {
           layout_config = {
             horizontal = {
               prompt_position = 'top',
-              preview_width = 0.6,
+              preview_width = 0.5,
             },
           },
+          file_ignore_patterns = { 'node_modules/' },
         },
       }
 
@@ -100,17 +112,23 @@ return {
       local builtin = require 'telescope.builtin'
       vim.keymap.set('n', '<leader>s.', builtin.oldfiles, { desc = '[S]earch Recent Files ("." for repeat)' })
       vim.keymap.set('n', '<leader>sd', builtin.diagnostics, { desc = '[S]earch [D]iagnostics' })
-      vim.keymap.set('n', '<leader>sf', builtin.find_files, { desc = '[S]earch [F]iles' })
       vim.keymap.set('n', '<leader>sg', builtin.live_grep, { desc = '[S]earch by [G]rep' })
       vim.keymap.set('n', '<leader>sh', builtin.help_tags, { desc = '[S]earch [H]elp' })
       vim.keymap.set('n', '<leader>sk', builtin.keymaps, { desc = '[S]earch [K]eymaps' })
       vim.keymap.set('n', '<leader>ss', builtin.builtin, { desc = '[S]earch [S]elect Telescope' })
       vim.keymap.set('n', '<leader>sr', builtin.resume, { desc = '[S]earch [R]esume' })
       vim.keymap.set('n', '<leader>sw', builtin.grep_string, { desc = '[S]earch current [W]ord' })
-      vim.keymap.set('n', '<leader>yh', '<cmd>Telescope neoclip<cr>', { desc = '[Y]ank [H]istory' })
-      vim.keymap.set('n', '<leader>lg', '<cmd>LazyGit<cr>', { desc = '[L]azy [G]it' })
-      vim.keymap.set('n', '<space>fb', ':Telescope file_browser<CR>', { desc = '[F]ile [B]rowser' })
       vim.keymap.set('n', '<leader><leader>', builtin.buffers, { desc = '[ ] Find existing buffers' })
+      vim.keymap.set('n', '<leader>lg', '<cmd>LazyGit<cr>', { desc = '[L]azy [G]it' })
+      vim.keymap.set('n', '<leader>yh', function()
+        require('telescope').extensions.neoclip.neoclip()
+      end, { desc = '[Y]ank [H]istory' })
+      vim.keymap.set('n', '<space>fb', function()
+        require('telescope').extensions.file_browser.file_browser()
+      end, { desc = '[F]ile [B]rowser' })
+      vim.keymap.set('n', '<leader>sf', function()
+        builtin.find_files { hidden = true, file_ignore_patterns = { '.git/', 'node_modules/' }, no_ignore = true }
+      end, { desc = '[S]earch [F]iles' })
 
       -- Slightly advanced example of overriding default behavior and theme
       vim.keymap.set('n', '<leader>/', function()

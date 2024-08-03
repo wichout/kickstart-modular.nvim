@@ -18,7 +18,7 @@ return {
       config = {
         header = vim.split(logo, '\n'),
         center = {
-          { icon = '󱀲   ', desc = 'Open File        ', action = 'Telescope find_files ', key = 'f' },
+          { icon = '󱀲   ', desc = 'Open File        ', action = 'Telescope file_browser', key = 'f' },
           { icon = '   ', desc = 'New File         ', action = 'ene | startinsert', key = 'n' },
           { icon = '   ', desc = 'Recent Files     ', action = 'Telescope oldfiles', key = 'r' },
           { icon = '   ', desc = 'Search Text      ', action = 'Telescope live_grep', key = 't' },
