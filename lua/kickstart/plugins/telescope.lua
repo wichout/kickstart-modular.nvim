@@ -27,16 +27,6 @@ return {
       },
       { 'nvim-telescope/telescope-ui-select.nvim' },
       { 'nvim-tree/nvim-web-devicons', enabled = vim.g.have_nerd_font },
-      {
-        'kdheepak/lazygit.nvim',
-        cmd = {
-          'LazyGit',
-          'LazyGitConfig',
-          'LazyGitCurrentFile',
-          'LazyGitFilter',
-          'LazyGitFilterCurrentFile',
-        },
-      },
       { 'AckslD/nvim-neoclip.lua', opts = {} },
       { 'nvim-telescope/telescope-file-browser.nvim' },
     },
@@ -66,13 +56,6 @@ return {
       require('telescope').setup {
         -- You can put your default mappings / updates / etc. in here
         --  All the info you're looking for is in `:help telescope.setup()`
-        --
-        -- defaults = {
-        --   mappings = {
-        --     i = { ['<c-enter>'] = 'to_fuzzy_refine' },
-        --   },
-        -- },
-        -- pickers = {}
         extensions = {
           ['ui-select'] = {
             require('telescope.themes').get_dropdown(),
@@ -104,7 +87,6 @@ return {
       -- Enable Telescope extensions if they are installed
       pcall(require('telescope').load_extension, 'fzf')
       pcall(require('telescope').load_extension, 'ui-select')
-      pcall(require('telescope').load_extension, 'lazygit')
       pcall(require('telescope').load_extension, 'neoclip')
       pcall(require('telescope').load_extension, 'file_browser')
 
@@ -119,7 +101,6 @@ return {
       vim.keymap.set('n', '<leader>sr', builtin.resume, { desc = '[S]earch [R]esume' })
       vim.keymap.set('n', '<leader>sw', builtin.grep_string, { desc = '[S]earch current [W]ord' })
       vim.keymap.set('n', '<leader><leader>', builtin.buffers, { desc = '[ ] Find existing buffers' })
-      vim.keymap.set('n', '<leader>lg', '<cmd>LazyGit<cr>', { desc = '[L]azy [G]it' })
       vim.keymap.set('n', '<leader>yh', function()
         require('telescope').extensions.neoclip.neoclip()
       end, { desc = '[Y]ank [H]istory' })
